@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
@@ -19,9 +19,7 @@ const loginSchema = z.object({
   password: z.string().min(6, "Password must be at least 6 characters"),
 });
 
-// type LoginFormData = z.infer<typeof loginSchema>;
-
-export function LoginForm() {
+function LoginFormContent() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [formErrors, setFormErrors] = useState<{
@@ -209,5 +207,50 @@ export function LoginForm() {
         </CardFooter>
       </form>
     </Card>
+  );
+}
+
+function LoginFormSkeleton() {
+  return (
+    <Card className="w-fit border-none shadow-md p-0 animate-pulse">
+      <div className="bg-secondary rounded-t-md p-6 flex flex-col">
+        <div className="mt-4 flex justify-between items-center">
+          <div>
+            <div className="h-8 bg-gray-300 rounded w-48 mb-2"></div>
+            <div className="h-4 bg-gray-300 rounded w-32"></div>
+          </div>
+          <div className="flex flex-end">
+            <div className="w-[180px] h-[150px] bg-gray-300 rounded"></div>
+          </div>
+        </div>
+      </div>
+      <CardContent className="p-6 pt-8">
+        <div className="grid gap-6">
+          <div className="grid gap-2">
+            <div className="h-4 bg-gray-300 rounded w-16"></div>
+            <div className="h-12 bg-gray-300 rounded"></div>
+          </div>
+          <div className="grid gap-2">
+            <div className="h-4 bg-gray-300 rounded w-20"></div>
+            <div className="h-12 bg-gray-300 rounded"></div>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="w-4 h-4 bg-gray-300 rounded"></div>
+            <div className="h-4 bg-gray-300 rounded w-24"></div>
+          </div>
+        </div>
+      </CardContent>
+      <CardFooter className="flex flex-col gap-4 p-6 pt-0">
+        <div className="w-full h-12 bg-gray-300 rounded"></div>
+      </CardFooter>
+    </Card>
+  );
+}
+
+export function LoginForm() {
+  return (
+    <Suspense fallback={<LoginFormSkeleton />}>
+      <LoginFormContent />
+    </Suspense>
   );
 }
