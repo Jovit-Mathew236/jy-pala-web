@@ -6,8 +6,8 @@ interface SearchBarProps {
   value: string;
   onChange: (value: string) => void;
   placeholder: string;
-  searchType: "parish" | "forane";
-  onSearchTypeChange: (type: "parish" | "forane") => void;
+  searchType?: "parish" | "forane";
+  onSearchTypeChange?: (type: "parish" | "forane") => void;
 }
 
 export function SearchBar({
@@ -35,7 +35,7 @@ export function SearchBar({
         className="flex-grow pl-4 pr-2 h-full text-sm text-gray-700 bg-transparent focus:outline-none placeholder-gray-400"
       />
       {/* Container for filter toggles */}
-      {pathname === "/admin" && (
+      {pathname === "/admin" && onSearchTypeChange && (
         <div className="flex items-center pr-1.5 space-x-1">
           <button
             onClick={() => onSearchTypeChange("forane")}
