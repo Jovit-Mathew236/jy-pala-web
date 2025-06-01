@@ -12,6 +12,7 @@ export interface Forane {
 }
 
 export interface ContactPerson {
+  $id: string;
   id: string;
   name: string;
   phone: string;

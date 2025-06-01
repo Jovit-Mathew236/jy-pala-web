@@ -77,14 +77,34 @@ export default function ParishPage() {
           ) : contacts.length > 0 ? (
             contacts.map((contact) => (
               <div
-                key={contact.id}
-                className="bg-white rounded-lg p-4 shadow-sm border border-gray-200"
+                key={contact.$id}
+                className="bg-green-100 rounded-lg p-4 hover:bg-green-200 transition-colors"
               >
-                <h2 className="text-lg font-semibold">{contact.name}</h2>
-                <p className="text-gray-600">{contact.phone}</p>
-                <p className="text-sm text-gray-500">
-                  DOB: {new Date(contact.dob).toLocaleDateString()}
-                </p>
+                <div className="flex justify-between items-start">
+                  <div className="flex-1">
+                    <h4 className="font-semibold text-lg">{contact.name}</h4>
+                    <p className="text-sm text-gray-600">{contact.phone}</p>
+                    <div className="mt-2 space-y-1">
+                      <p className="text-sm">
+                        <span className="font-medium">Forane:</span>{" "}
+                        {contact.forane}
+                      </p>
+                      <p className="text-sm">
+                        <span className="font-medium">Parish:</span>{" "}
+                        {contact.parish}
+                      </p>
+                      {contact.dob && (
+                        <p className="text-sm">
+                          <span className="font-medium">DOB:</span>{" "}
+                          {new Date(contact.dob).toLocaleDateString()}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                  <div className="text-xs text-gray-500 bg-white px-2 py-1 rounded">
+                    Contact Person
+                  </div>
+                </div>
               </div>
             ))
           ) : (

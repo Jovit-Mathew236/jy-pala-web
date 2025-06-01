@@ -11,11 +11,35 @@ export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const forane = searchParams.get("forane");
   const parish = searchParams.get("parish");
+  const search = searchParams.get("search");
+  const searchType = searchParams.get("searchType"); // 'forane' or 'parish'
 
   try {
     const queries = [];
-    if (forane) queries.push(Query.equal("forane", forane));
-    if (parish) queries.push(Query.equal("parish", parish));
+
+    // Handle specific forane or parish filtering
+    if (forane && !search) {
+      queries.push(Query.equal("forane", forane));
+    }
+    if (parish && !search) {
+      queries.push(Query.equal("parish", parish));
+    }
+
+    // Handle search functionality
+    if (search) {
+      if (searchType === "forane") {
+        // Search by forane name (partial match)
+        queries.push(Query.search("forane", search));
+      } else if (searchType === "parish") {
+        // Search by parish name (partial match)
+        queries.push(Query.search("parish", search));
+      } else {
+        // Default: search both forane and parish
+        // Note: Appwrite doesn't support OR queries directly, so we'll handle this in the client
+        // For now, we'll search parishes by default if no searchType is specified
+        queries.push(Query.search("parish", search));
+      }
+    }
 
     const response = await databases.listDocuments(
       process.env.NEXT_PUBLIC_DATABASE_ID || "6824b6a50032ee5b592d",
