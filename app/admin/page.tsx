@@ -85,11 +85,11 @@ export default function AdminPage() {
     setSearchQuery(value);
   };
 
-  const clearSearch = () => {
-    setSearchQuery("");
-    setContactResults([]);
-    setShowContactResults(false);
-  };
+  // const clearSearch = () => {
+  //   setSearchQuery("");
+  //   setContactResults([]);
+  //   setShowContactResults(false);
+  // };
 
   return (
     <div className="min-h-screen bg-background">
@@ -108,14 +108,14 @@ export default function AdminPage() {
                 onSearchTypeChange={setSearchType} // Pass setSearchType directly
               />
             </div>
-            {searchQuery && (
+            {/* {searchQuery && (
               <button
                 onClick={clearSearch}
                 className="px-3 py-2 text-sm bg-gray-200 hover:bg-gray-300 rounded-md transition-colors"
               >
                 Clear
               </button>
-            )}
+            )} */}
           </div>
 
           {/* The old Search Type Toggle buttons are removed from here */}
